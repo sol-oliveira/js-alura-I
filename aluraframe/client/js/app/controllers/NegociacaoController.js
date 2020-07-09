@@ -28,38 +28,29 @@ class NegociacaoController {
 
     importaNegociacoes() {
 
-          let service = new NegociacaoService();
-         
-          service.obterNegociacoesDaSemana((err, negociacoes) => {
-            if(err) {
-                this._mensagem.texto = err;
-                return;
-            }
-            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));            
-            this._mensagem.texto = 'Negociações importadas com sucesso';
+        let service = new NegociacaoService();
+                
+        service.obterNegociacoesDaSemana()
+          .then(negociacoes => {
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+            this._mensagem.texto = 'Negociações da semana obtidas com sucesso';
+        })
+        .catch(erro => this._mensagem.texto = erro);
 
-                service.obterNegociacoesDaSemanaAnterior((erro, negociacoes) => {
-                if(erro) {
-                    this._mensagem.texto = erro;
-                    return;
-                }
-                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-                this._mensagem.texto = 'Negociações importadas com sucesso';
+        service.obterNegociacoesDaSemanaAnterior()
+          .then(negociacoes => {
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+            this._mensagem.texto = 'Negociações da semana obtidas com sucesso';
+        })
+        .catch(erro => this._mensagem.texto = erro);
 
-                    service.obterNegociacoesDaSemanaRetrasada((erro, negociacoes) => {
-                        if(erro) {
-                            this._mensagem.texto = erro;
-                            return;
-                        }
+        service.obterNegociacoesDaSemanaRetrasada()
+          .then(negociacoes => {
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+            this._mensagem.texto = 'Negociações da semana obtidas com sucesso';
+        })
+        .catch(erro => this._mensagem.texto = erro);
 
-                    negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-                        this._mensagem.texto = 'Negociações importadas com sucesso';
-                });
-
-            });
-        });  /* Função aninhada dentro de outra damos nome de Pyramid of Doom (pirâmide da desgraça).
-               A pirâmide é um forte indício de que temos problemas de legibilidade do código, na verdade, é o sintoma de um problema maior, o Callback Hell.
-               Ocorre quando temos requisições assíncronas executadas em determinada ordem, que chama vários callbacks seguidos.*/   
     }
 
     apaga() {
