@@ -13,17 +13,35 @@ class ConnectionFactory {
 
         return new Promise((resolve, reject) => {
 
-        	let openRequest = window.indexedDB.open('aluraframe',4);  
+            let openRequest = window.indexedDB.open(dbName,version);
 
-        	openRequest.onupgradeneeded = e => {
-	        };
+            openRequest.onupgradeneeded = e => {
 
-	        openRequest.onsuccess = e => {    
-	        };
+                ConnectionFactory._createStores(e.target.result);
+            };
 
-	        openRequest.onerror = e => {    
-	        };  
+            openRequest.onsuccess = e => {    
 
+                resolve(e.target.result);
+            };
+
+            openRequest.onerror = e => {    
+
+                console.log(e.target.error);
+
+                reject(e.target.error.name);
+            };
+        });
+    }
+    static _createStores(connection) {
+
+        stores.forEach(store => {
+
+            if(connection.objectStoreNames.contains(store)) connection.deleteObjectStore(store);
+            connection.createObjectStore(store, { autoIncrement: true });
         });
     }
 }
+
+// testar no console
+// ConnectionFactory.getConnection().then(connection => console.log(connection));
