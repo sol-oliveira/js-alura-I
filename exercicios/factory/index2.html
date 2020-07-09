@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>  
+    <script>
+        class Negociacao{
+            constructor(dados){
+                
+                this._dados = {
+                    data: new Date(),
+                    quantidade: 0,
+                    valor: 0
+                };
+            }
+
+             get dados() {
+                return this._dados;
+            };
+
+            set dados(dados) {
+                this._dados = dados;
+            };
+
+            vender(){
+                console.log('vender');
+            };          
+
+            comprar(){
+                console.log('comprar');
+            };
+
+            negociar(){
+                console.log('negociar');
+            };
+           
+        }
+
+        class NegociacaoAcao extends Negociacao{
+            constructor(dados){
+                super(dados)
+            }
+        }
+
+        class NegociacaoOpcao extends Negociacao{
+            constructor(dados){
+                super(dados)
+            }
+        }
+
+        class NegociacaoFactory {
+
+            static create(tipoNegociacao, dados) {
+                if(tipoNegociacao == "opcao") {
+                    console.log('instanciei a opção');
+                    return new NegociacaoOpcao(dados.data, dados.quantidade, dados.valor);
+                   
+                }
+                console.log('instanciei a ação');
+                return new NegociacaoAcao(dados.data, dados.quantidade, dados.valor);
+            }
+        }
+   
+        let n = NegociacaoFactory.create("acao", {'data': new Date(), 'quantidade': 2, 'valor': 34.3});
+        console.log(n);
+
+
+
+    </script>
+</body>
+</html>

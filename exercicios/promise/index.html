@@ -1,0 +1,51 @@
+<!-- dissecando-uma-promise.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Dissecando uma promise</title>
+</head>
+<body>
+  <!--  <script>
+
+        let promise = new Promise((resolve, reject) => {
+            setTimeout(() => resolve('PROMISE RESOLVIDA'), 5000);
+        });
+
+        promise.then(resultado => console.log(resultado));
+        console.log('FIM'); // novidade aqui!
+    </script> -->
+
+  <!--  <script>
+
+	    let promise = new Promise((resolve, reject) => {
+	        console.log(resolve);
+	        setTimeout(() => reject('HOUVE PROBLEMAS'), 5000);
+	    });
+
+	    promise
+	        .then(resultado => console.log(resultado))
+	        .catch(erro => console.log(erro)); // exibe no console HOUVE PROBLEMAS
+	</script> -->
+
+	<script>
+
+	    let ok = true;
+	    let promise = new Promise((resolve, reject) => {
+
+	        // como temos mais de uma instrução, precisamos colocar um bloco em nossa arrow function! Lembrou?
+	        setTimeout(() => {
+	            if(ok) {
+	                resolve('PROMISE CONCLUÍDA');
+	            } else {
+	                reject('HOUVE PROBLEMAS');
+	            }
+	        }, 5000);
+	    });
+
+	    promise
+	        .then(resultado => console.log(resultado))
+	        .catch(erro => console.log(erro));
+	</script>
+</body>
+</html>
