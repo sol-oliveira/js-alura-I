@@ -21,7 +21,7 @@ class NegociacaoController {
        ConnectionFactory
         .getConnection()
         .then(connection => new NegociacaoDao(connection))
-        .then(dao => dao.listaTodos())
+        .then(dao => dao.listaTodos())        
         .then(negociacoes =>
             negociacoes.forEach(negociacao =>
                 this._listaNegociacoes.adiciona(negociacao)))
@@ -55,6 +55,11 @@ class NegociacaoController {
         let service = new NegociacaoService();
         service
         .obterNegociacoes()
+        .then(negociacoes =>
+            negociacoes.filter(negociacao =>
+                !this._listaNegociacoes.negociacoes.some(negociacaoExistente =>
+                    JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)))
+        )
         .then(negociacoes => {
           negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
           this._mensagem.texto = 'Negociações do período importadas com sucesso';
