@@ -1,0 +1,86 @@
+<!-- Como uma IIFE é uma função, toda função pode retornar algo. Nesse caso, precisamos retornar as duas funções de conversão, mas sabemos que só podemos ter um retorno. É por isso que criamos o objeto modulo e nele adicionamos dinamicamente duas propriedades com os nomes das funções que havíamos criado, e em seguida definimos o comportamento dessas propriedades através de uma função, no caso, arrow functions por serem mais sucintas.-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<!--    <script>        
+        let simboloMoeda = 'R$ ';
+
+        function numeroParaReal(numero) {
+
+            return simboloMoeda + numero.toFixed(2).replace('.', ',');
+        }
+
+        function realParaNumero(texto) {
+
+            return texto.replace(simboloMoeda, '').replace(',', '.');
+        }
+
+        let real = 'R$ 100,20';
+        let realConvertidoEmNumero = realParaNumero(real);
+        alert(realConvertidoEmNumero) // exibe 100,20
+
+        let numero = 200.15;
+        let numeroConvertidoEmReal = numeroParaReal(numero);
+        alert(numeroConvertidoEmReal); // exibe R$ 200,15
+
+    </script>  -->
+
+
+  <!--  <script>        
+        (function() {
+
+            let simboloMoeda = 'R$ ';
+
+            function numeroParaReal(numero) {
+
+                return simboloMoeda + numero.toFixed(2).replace('.', ',');
+            }
+
+            function realParaNumero(texto) {
+
+                return texto.replace(simboloMoeda, '').replace(',', '.');
+            }
+        })();
+    </script> -->
+
+    <script>
+         var formatadorDeMoedas = (function() {
+
+            let simboloMoeda = 'R$ ';
+            let modulo = {};
+
+            modulo.numeroParaReal = numero => {
+
+                return simboloMoeda + numero.toFixed(2).replace('.', ',');
+            }
+
+            modulo.realParaNumero = texto => {
+
+                return texto.replace(simboloMoeda, '').replace(',', '.');
+            }
+
+            return modulo;
+        })();
+
+        // exemplo de uso
+
+        let real = 'R$ 100,20';
+        let realConvertidoEmNumero =
+             formatadorDeMoedas.realParaNumero(real);
+
+        alert(realConvertidoEmNumero);
+
+      //  let numero = 200.15;
+      //  let numeroConvertidoEmReal = 
+       //     formatadorDeMoedas.numeroParaReal(numero);
+
+       // alert(numeroConvertidoEmReal);
+    </script>
+</body>
+</html>
