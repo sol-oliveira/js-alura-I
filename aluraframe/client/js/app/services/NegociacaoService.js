@@ -1,7 +1,7 @@
 class NegociacaoService { 
 
     constructor() {
-        this.http = new HttpService();
+        this.http = new HttpService();        
       }
    
     obterNegociacoesDaSemana() {   
@@ -71,6 +71,28 @@ class NegociacaoService {
                 throw new Error("Não foi possível adicionar a negociação")
             });
     }
-     
+
+    lista() {
+        return ConnectionFactory
+          .getConnection()
+          .then(connection => new NegociacaoDao(connection))
+          .then(dao => dao.listaTodos())
+          .catch(erro => {
+              console.log(erro);
+              throw new Error('Não foi possível obter as negociações')
+            });
+    }
+
+    apaga() {
+     return ConnectionFactory
+        .getConnection()
+        .then(connection => new NegociacaoDao(connection))
+        .then(dao => dao.apagaTodos())
+        .then(() => 'Negociações apagadas com sucesso')
+        .catch(erro => {
+              console.log(erro);
+              throw new Error('Não foi possível apagar as negociações')
+        });
+    }     
 
 }
